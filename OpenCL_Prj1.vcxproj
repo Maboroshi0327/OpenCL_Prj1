@@ -132,11 +132,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="MyFunctions.c" />
+    <ClCompile Include="MyFunctions.cpp" />
     <ClCompile Include="OpenCL_Prj1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="dot_product.cl" />
+    <None Include="RGB2Y.cl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFunctions.h" />
