@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>./OpenCL/include;$(IncludePath)</IncludePath>
-    <LibraryPath>./OpenCL/lib/x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>./OpenCL/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

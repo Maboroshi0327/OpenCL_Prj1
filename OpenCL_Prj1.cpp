@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
     RReadIMG(&imgobj, "Ducks.BMP");
     printf("2 image_trans(CPU)\n");
     IMG_Trans(&imgobj);
-    printf("3 save image\n\n");
+    printf("3 save image(CPU)\n\n");
     SSaveIMG(&imgobj, "Output_CPU.BMP");
 #pragma endregion CPU
 
@@ -124,7 +124,7 @@ int main(int argc, char* argv[]) {
         IMG_Size * sizeof(cl_uchar),
         0, NULL, NULL, NULL);
 
-    printf("5 save image\n\n");
+    printf("5 save image(GPU)\n\n");
     SSaveIMGX(ptr, "Output_GPU.BMP");
 
     clReleaseMemObject(clbufR);
