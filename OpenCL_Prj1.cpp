@@ -1,21 +1,22 @@
 ﻿#include <CL/opencl.h>
 #include <iostream>
+#include <chrono>
 #include "MyFunctions.h"
 
-IMG_obj imgobj;
-
 int main(int argc, char* argv[]) {
+    IMG_obj imgobj;
+
 #pragma region CPU
     create_buffer(&imgobj);
-    printf("1 read image\n");
+    printf("1 read image\n\n");
     RReadIMG(&imgobj, "Ducks.BMP");
-    printf("2 image_trans\n");
+    printf("2 image_trans(CPU)\n");
     IMG_Trans(&imgobj);
-    printf("3 save image\n");
+    printf("3 save image\n\n");
     SSaveIMG(&imgobj, "Output_CPU.BMP");
-    //printf("4 release buffer\n");
-    //delete_buffer(&imgobj);
 #pragma endregion CPU
+
+    printf("4 image_trans(GPU)\n");
 
 #pragma region openCL
     cl_uint status;
@@ -96,8 +97,7 @@ int main(int argc, char* argv[]) {
     clSetKernelArg(kernel, 2, sizeof(cl_mem), (void*)&clbufB);
     clSetKernelArg(kernel, 3, sizeof(cl_mem), (void*)&clbufY);
 
-    //struct timespec nt0, nt1;
-    //clock_gettime(CLOCK_MONOTONIC, &nt0);
+    auto start = std::chrono::high_resolution_clock::now();
     // 執行kernel
     cl_event ev;
     size_t global_work_size = IMG_Size;
@@ -109,10 +109,10 @@ int main(int argc, char* argv[]) {
         NULL, 0, NULL, &ev);
 
     clFinish(queue);
-    //clock_gettime(CLOCK MONOTONIC, snt1);
-    //double allTimeN;
-    //allTimeN = (nt1.tv_sec + (double)nt1.tv_nsec / 1000000000.0) - (nt0.tv_sec + (double)nt0.tv_nsec / 1000000000.0);
-    //printf("GPU Time:%10.5fsec\n", allTimeN);
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double, std::ratio<1, 1000>> duration = end - start;
+    std::cout << "GPU Time: " << duration.count() << " ms\n" << std::endl;
 
     // 數據Copy回host記憶體
     cl_uchar* ptr;
@@ -124,6 +124,7 @@ int main(int argc, char* argv[]) {
         IMG_Size * sizeof(cl_uchar),
         0, NULL, NULL, NULL);
 
+    printf("5 save image\n\n");
     SSaveIMGX(ptr, "Output_GPU.BMP");
 
     clReleaseMemObject(clbufR);
@@ -134,6 +135,9 @@ int main(int argc, char* argv[]) {
     clReleaseCommandQueue(queue);
     clReleaseContext(context);
 #pragma endregion openCL
+
+    printf("6 release buffer\n");
+    delete_buffer(&imgobj);
 
     return 0;
 }

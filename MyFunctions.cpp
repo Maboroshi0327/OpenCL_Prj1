@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <cstdio>
+//#include <cstdio>
+#include <iostream>
 #include <chrono>
 #include <fstream>
 #include "MyFunctions.h"
@@ -168,10 +169,10 @@ int IMG_Trans(IMGObj* IObj)
             off++; index += 3;
         }
     }
-    //struct timespec nt0, nt1;
+
     float pixel_Y;
     index = 0;
-    //clock_gettime(CLOCK_MONOTONIC, &nt0);
+
     auto start = std::chrono::high_resolution_clock::now();
     for (y = 0; y != IMG_H; y++) {
         for (x = 0; x != IMG_W; x++)
@@ -184,12 +185,10 @@ int IMG_Trans(IMGObj* IObj)
         }
     }
     auto end = std::chrono::high_resolution_clock::now();
-    //clock_gettime(CLOCK_MONOTONIC, &nt1);
-    //double allTimeN;
-    //allTimeN = (nt1.tv_sec + (double)nt1.tv_nsec / 1000000000.0) - (nt0.tv_sec + (double)nt0.tv_nsec / 1000000000.0);
-    //printf("Normal Time:%10.5f sec\n", allTimeN);
-    std::chrono::duration<float> duration = end - start;
-    printf("Duration : %f", duration.count());
+
+    std::chrono::duration<double, std::ratio<1, 1000>> duration = end - start;
+    std::cout << "CPU Time: " << duration.count() << " ms\n" << std::endl;
+
     return 0;
 }
 

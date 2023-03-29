@@ -3,7 +3,7 @@
 
 #define IMG_W 1920
 #define IMG_H 1080
-#define IMG_Size 2073600
+#define IMG_Size IMG_W * IMG_H
 
 typedef struct IMG_obj {
     unsigned char* InputSrc, * InputData;
