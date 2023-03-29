@@ -16,7 +16,7 @@ int SSaveIMG(IMGObj* IObj, const char* fname);
 int SSaveIMGX(unsigned char* ptr, const char* fname);
 int create_buffer(IMGObj* IObj);
 int delete_buffer(IMGObj* IObj);
-int IMG_Trans(IMGObj* IObj);
+int IMG_Trans(IMGObj* IObj, double& timeCPU);
 int convertToString(const char* filename, std::string& s);
 
 #endif  /* __MYFUNCTIONS   */

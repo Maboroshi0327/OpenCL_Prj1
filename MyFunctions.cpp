@@ -157,8 +157,7 @@ int delete_buffer(IMGObj* IObj) {
     return 0;
 }
 
-int IMG_Trans(IMGObj* IObj)
-{
+int IMG_Trans(IMGObj* IObj, double& timeCPU) {
     int x, y, index = 0, off = 0;
     for (y = 0; y != IMG_H; y++) {
         for (x = 0; x != IMG_W; x++)
@@ -188,6 +187,7 @@ int IMG_Trans(IMGObj* IObj)
 
     std::chrono::duration<double, std::ratio<1, 1000>> duration = end - start;
     std::cout << "CPU Time: " << duration.count() << " ms\n" << std::endl;
+    timeCPU = duration.count();
 
     return 0;
 }

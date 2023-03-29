@@ -10,8 +10,12 @@ int main(int argc, char* argv[]) {
     create_buffer(&imgobj);
     printf("1 read image\n\n");
     RReadIMG(&imgobj, "Ducks.BMP");
+
+
     printf("2 image_trans(CPU)\n");
-    IMG_Trans(&imgobj);
+    double timeCPU;
+    IMG_Trans(&imgobj, timeCPU);
+
     printf("3 save image(CPU)\n\n");
     SSaveIMG(&imgobj, "Output_CPU.BMP");
 #pragma endregion CPU
@@ -113,6 +117,7 @@ int main(int argc, char* argv[]) {
 
     std::chrono::duration<double, std::ratio<1, 1000>> duration = end - start;
     std::cout << "GPU Time: " << duration.count() << " ms\n" << std::endl;
+    double timeGPU = duration.count();
 
     // 數據Copy回host記憶體
     cl_uchar* ptr;
@@ -136,7 +141,8 @@ int main(int argc, char* argv[]) {
     clReleaseContext(context);
 #pragma endregion openCL
 
-    printf("6 release buffer\n");
+    std::cout << "6 GPU is " << timeCPU / timeGPU << " times faster than CPU.\n" << std::endl;
+    printf("7 release buffer\n");
     delete_buffer(&imgobj);
 
     return 0;
