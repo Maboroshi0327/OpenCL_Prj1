@@ -3,6 +3,8 @@
 * 作業3
 
 ## 環境
+* Windows 11 Home
+* NVIDIA OpenCL Library
 * Visual Studio Community 2022
-* (安裝)使用 C++ 的桌面開發
-* (安裝)通用 Windows 平台開發
+  * (安裝)使用 C++ 的桌面開發
+  * (安裝)通用 Windows 平台開發
